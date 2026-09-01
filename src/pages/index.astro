@@ -9,10 +9,22 @@ import HorizontalGallery from '../components/HorizontalGallery';
 import TypographyManifesto from '../components/TypographyManifesto';
 import ContactExperience from '../components/ContactExperience';
 import SecretTrigger from '../components/SecretTrigger';
+import BackToTop from '../components/BackToTop';
+import WhispersOverlay from '../components/WhispersOverlay';
+import { db, Whisper, desc } from 'astro:db';
+
+const whispers = await db.select().from(Whisper).orderBy(desc(Whisper.createdAt));
+const iconicWhispers = whispers.slice(0, 5);
 ---
 
 <Layout title="Selpa | Handcrafted Minimal Leather">
+  <!-- تریگر مخفی در بالاترین نقطه سایت قرار دارد -->
   <SecretTrigger client:load />
+  <BackToTop client:load />
+
+  
+  <!-- لایه جادویی ما که به صورت پیش‌فرض مخفی است و URL را تغییر نمی‌دهد -->
+  <WhispersOverlay client:load whispers={iconicWhispers} />
   
   <SmoothScroller client:load>
     <main>

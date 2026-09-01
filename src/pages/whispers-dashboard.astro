@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { db, Whisper, desc } from 'astro:db';
+
+// دریافت تمام نجواها
+const allWhispers = await db.select().from(Whisper).orderBy(desc(Whisper.createdAt));
+
+console.log('📊 Dashboard - تعداد نجواها:', allWhispers.length);
+console.log('💬 نجواهای دریافتی:', allWhispers);
+---
+
+<Layout title="Selpa | نجواها - داشبورد مدیریت">
+  <main class="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-[#e5dcd3] p-8">
+    <div class="max-w-6xl mx-auto">
+      
+      {/* هدر */}
+      <div class="mb-16">
+        <h1 class="font-art text-6xl md:text-7xl mb-4">نجواها</h1>
+        <p class="text-lg text-zinc-400">
+          بایگانی تمام پیام‌ها و تجربیات <span class="font-bold text-[#e5dcd3]">(کل: {allWhispers.length})</span>
+        </p>
+      </div>
+
+      {/* آمار */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+          <p class="text-zinc-400 text-sm mb-2">تعداد کل نجواها</p>
+          <p class="text-4xl font-bold">{allWhispers.length}</p>
+        </div>
+        <div class="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+          <p class="text-zinc-400 text-sm mb-2">آخرین نجوا</p>
+          <p class="text-lg font-fa">{allWhispers[0]?.author || '—'}</p>
+        </div>
+        <div class="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+          <p class="text-zinc-400 text-sm mb-2">تاریخ آخرین</p>
+          <p class="text-sm font-mono">{allWhispers[0]?.createdAt || '—'}</p>
+        </div>
+      </div>
+
+      {/* لیست نجواها */}
+      <div class="space-y-6">
+        <h2 class="text-2xl font-bold mb-8">تمام نجواها</h2>
+        
+        {allWhispers.length === 0 ? (
+          <div class="text-center py-16 bg-zinc-800/30 rounded-lg border border-zinc-700 border-dashed">
+            <p class="text-zinc-400 text-lg">هنوز نجوایی ثبت نشده است</p>
+          </div>
+        ) : (
+          <div class="grid gap-6">
+            {allWhispers.map((whisper, i) => (
+              <div key={whisper.id} class="bg-zinc-800/50 border border-zinc-700 rounded-lg p-8 hover:bg-zinc-800/70 transition-all">
+                {/* شماره و تاریخ */}
+                <div class="flex justify-between items-start mb-4">
+                  <span class="text-xs font-mono bg-zinc-700 text-zinc-300 px-3 py-1 rounded">
+                    #{whisper.id}
+                  </span>
+                  <span class="text-xs text-zinc-500 font-mono">{whisper.createdAt}</span>
+                </div>
+                
+                {/* متن نجوا */}
+                <p class="text-xl font-fa font-light leading-relaxed text-[#e5dcd3] mb-6 py-4 border-l-4 border-[#e5dcd3]/30 pl-4" dir="rtl">
+                  "{whisper.message}"
+                </p>
+                
+                {/* نویسنده */}
+                <div class="flex items-center gap-3 text-sm">
+                  <span class="text-zinc-500">—</span>
+                  <span class="font-serif tracking-wider text-zinc-300">{whisper.author}</span>
+                  <span class="ml-auto text-xs bg-zinc-700/50 px-2 py-1 rounded text-zinc-400">
+                    {i === 0 ? 'جدیدترین' : ''}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* فوتر */}
+      <div class="mt-20 pt-8 border-t border-zinc-700 text-center text-zinc-500 text-sm">
+        <p>این صفحه فقط برای مدیریت و نمایش داده‌ها است</p>
+        <p class="mt-2">
+          <a href="/" class="text-[#e5dcd3] hover:underline">بازگشت به صفحه اول</a>
+        </p>
+      </div>
+
+    </div>
+  </main>
+</Layout>
+
+<style>
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #52525b;
+    border-radius: 4px;
+  }
+</style>

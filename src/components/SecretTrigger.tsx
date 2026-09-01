@@ -3,82 +3,88 @@ import gsap from 'gsap';
 
 export default function SecretTrigger() {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let pullAmount = 0;
     let isTriggered = false;
-    let touchStartY = 0;
 
-    const updateUI = () => {
-      if (!overlayRef.current) return;
-      
-      // محاسبه میزان کشش (تا سقف 300 پیکسل)
-      const progress = Math.min(pullAmount / 300, 1);
-      gsap.to(overlayRef.current, { opacity: progress, duration: 0.1 });
-
-      // اگر کشش به حد نصاب رسید، انتقال به صفحه مخفی
-      if (progress >= 1 && !isTriggered) {
-        isTriggered = true;
-        window.location.href = '/whispers'; // آدرس صفحه مخفی
-      }
-    };
-
-    // تشخیص اسکرول موس (چرخ موس به سمت بالا)
     const handleWheel = (e: WheelEvent) => {
-      if (window.scrollY <= 0 && e.deltaY < 0) {
+      // فقط زمانی که در بالاترین نقطه سایت هستیم و به بالا اسکرول میکنیم
+      if (window.scrollY <= 0 && e.deltaY < 0 && !isTriggered) {
         pullAmount += Math.abs(e.deltaY);
-        updateUI();
-      } else if (pullAmount > 0) {
-        pullAmount = 0;
-        updateUI();
-      }
-    };
+        
+        // کاربر فقط 150 پیکسل اسکرول کند کافیست
+        const progress = Math.min(pullAmount / 150, 1);
+        
+        // افکت محو شدن صفحه زیرین و ایجاد مه تاریک
+        gsap.to(overlayRef.current, { 
+          opacity: progress, 
+          backdropFilter: `blur(${progress * 15}px)`,
+          duration: 0.1 
+        });
 
-    // تشخیص لمس در موبایل (کشیدن انگشت به پایین)
-    const handleTouchStart = (e: TouchEvent) => {
-      if (window.scrollY <= 0) touchStartY = e.touches[0].clientY;
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (window.scrollY <= 0 && touchStartY > 0) {
-        const delta = e.touches[0].clientY - touchStartY;
-        if (delta > 0) {
-          pullAmount = delta * 1.5; // ضریب سرعت در موبایل
-          updateUI();
+        // وقتی به حد نصاب رسید، خودش بقیه کارها را اتوماتیک انجام می‌دهد
+        if (progress >= 1) {
+          isTriggered = true;
+          
+          // انیمیشن نجواگونه متن (بزرگ شدن و درخشش)
+          gsap.to(textRef.current, { 
+            opacity: 1, 
+            scale: 1.05, 
+            duration: 1.5, 
+            ease: "power3.out" 
+          });
+          
+          // بعد از ۱.۵ ثانیه تماشای افکت، اتوماتیک وارد نجواها می‌شود
+          setTimeout(() => {
+            window.dispatchEvent(new CustomEvent('openWhispers'));
+            
+            // ریست کردن تریگر در پس‌زمینه برای دفعات بعد
+            setTimeout(() => {
+              pullAmount = 0;
+              isTriggered = false;
+              gsap.set([overlayRef.current, textRef.current], { opacity: 0 });
+              gsap.set(textRef.current, { scale: 0.95 });
+            }, 1000);
+          }, 1500);
         }
-      }
-    };
-
-    const handleTouchEnd = () => {
-      if (!isTriggered) {
-        pullAmount = 0;
-        updateUI();
-        touchStartY = 0;
+      } else if (pullAmount > 0 && !isTriggered) {
+        // اگر کاربر اسکرول را رها کرد، مه به آرامی از بین می‌رود
+        pullAmount = Math.max(0, pullAmount - 15);
+        gsap.to(overlayRef.current, { 
+          opacity: Math.min(pullAmount / 150, 1),
+          backdropFilter: `blur(${Math.min(pullAmount / 150, 1) * 15}px)`
+        });
       }
     };
 
     window.addEventListener('wheel', handleWheel);
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchend', handleTouchEnd);
-
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
-    };
+    return () => window.removeEventListener('wheel', handleWheel);
   }, []);
 
   return (
     <div 
       ref={overlayRef} 
-      className="fixed top-0 left-0 w-full h-screen bg-zinc-950 text-[#e5dcd3] z-[99999] opacity-0 pointer-events-none flex flex-col items-center justify-center transition-opacity"
+      className="fixed inset-0 z-[99999] opacity-0 pointer-events-none bg-zinc-950/70 transition-all duration-100 flex items-center justify-center"
     >
-      <span className="font-serif text-3xl md:text-5xl tracking-[0.5em] uppercase mb-6">The Whispers</span>
-      <span className="font-fa font-light text-sm md:text-base text-zinc-500 tracking-widest">
-        در حال ورود به بایگانی مخفی...
-      </span>
+      {/* افکت نور شعاعی و مرموز به جای نویز */}
+      <div 
+        className="absolute inset-0 opacity-40 mix-blend-screen" 
+        style={{ background: 'radial-gradient(circle at center, #ffffff 0%, transparent 50%)', filter: 'blur(50px)' }}
+      ></div>
+      
+      <div ref={textRef} className="relative z-10 flex flex-col items-center opacity-0 scale-95">
+        <span 
+          className="font-serif text-4xl md:text-6xl tracking-[0.6em] text-[#e5dcd3] uppercase mb-4" 
+          style={{ textShadow: '0 0 30px rgba(229,220,211,0.6)' }}
+        >
+          The Whispers
+        </span>
+        <span className="font-fa font-light text-sm md:text-base text-zinc-400 tracking-widest">
+          فراخوانی از اعماق بایگانی...
+        </span>
+      </div>
     </div>
   );
 }

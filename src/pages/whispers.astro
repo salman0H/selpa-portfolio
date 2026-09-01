@@ -1,52 +1,138 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WhisperForm from '../components/WhisperForm';
+import { db, Whisper, desc } from 'astro:db';
 
-// دیتاهای فرضی برای نظرات ماندگار
-const iconicReviews = [
-  { text: "این یک کیف نیست، یک قطعه معماری است که می‌توان آن را پوشید.", author: "A.R" },
-  { text: "بوی چرم خام و خطوط بی‌نقص. وقتی به دستم رسید متوجه شدم ماشین‌ها هرگز نمی‌توانند روح داشته باشند.", author: "Shabnam" },
-];
+const whispers = await db.select().from(Whisper).orderBy(desc(Whisper.createdAt));
+
+// انتخاب ۵ نجوای اخیر برای نمایش آیکانیک
+const iconicWhispers = whispers.slice(0, 5);
 ---
 
 <Layout title="Selpa | The Whispers">
-  <main className="min-h-screen bg-zinc-950 text-[#e5dcd3] pt-40 pb-20 overflow-hidden">
+  <main id="whispers-main" class="relative min-h-screen bg-[#e5dcd3] text-zinc-950 overflow-hidden">
     
-    <div className="max-w-7xl mx-auto px-4 md:px-20 relative z-10">
+    <!-- لایه رویی: گالری نجواها -->
+    <div id="whispers-gallery" class="relative z-20 w-full bg-[#e5dcd3] pb-32 rounded-b-[4rem] shadow-2xl shadow-black/20">
       
-      <!-- هدر صفحه -->
-      <div className="mb-40 border-b border-zinc-900 pb-10">
-        <span className="font-serif text-sm tracking-[0.5em] text-zinc-600 uppercase block mb-6">Hidden Archive</span>
-        <h1 className="font-display text-7xl md:text-[9rem] leading-none tracking-tight">
-          نجواها
+      <div class="h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
+        <!-- تایپوگرافی پس‌زمینه -->
+        <h1 class="absolute z-0 font-serif text-[25vw] text-zinc-300 leading-none uppercase tracking-tighter mix-blend-multiply opacity-50 pointer-events-none select-none">
+          WHISPERS
         </h1>
-        <p className="font-fa text-xl text-zinc-500 font-light mt-8 max-w-lg" dir="rtl">
-          صداهایی که در میان چرخ‌دنده‌های تولید انبوه گم نمی‌شوند. اینجا بایگانی تجربیات ناب کسانی است که سلپا را لمس کرده‌اند.
+        
+        <div class="relative z-10 mix-blend-difference text-white">
+          <span class="font-serif text-sm md:text-base tracking-[0.5em] uppercase block mb-6">The Hidden Archive</span>
+          <h2 class="font-art text-7xl md:text-[10rem] leading-none mb-8" style="text-rendering: optimizeLegibility;">نجواها</h2>
+          <p class="font-fa text-lg md:text-xl font-light max-w-lg mx-auto leading-relaxed" dir="rtl">
+            صداهایی که در میان چرخ‌دنده‌های تولید انبوه گم نمی‌شوند. اینجا بایگانی تجربیات ناب کسانی است که سلپا را لمس کرده‌اند.
+          </p>
+        </div>
+      </div>
+
+      <!-- گالری نظرات پراکنده -->
+      <div class="max-w-7xl mx-auto px-4 md:px-20 mt-20">
+        {iconicWhispers.length === 0 ? (
+          <p class="font-fa text-center text-zinc-500 text-2xl italic my-40">سکوت مطلق. اولین نجوا را شما ثبت کنید.</p>
+        ) : (
+          <div class="flex flex-col gap-40 md:gap-60 pb-40">
+            {iconicWhispers.map((whisper, i) => (
+              <div class={`whisper-item relative flex flex-col w-full max-w-4xl ${i % 2 === 0 ? 'md:self-end md:text-right md:items-end' : 'md:self-start md:text-left md:items-start'}`} dir={i % 2 === 0 ? 'rtl' : 'ltr'}>
+                <!-- کوتیشن مارک غول‌پیکر در پس‌زمینه -->
+                <span class="absolute -top-20 md:-top-32 font-serif text-[15rem] md:text-[20rem] text-zinc-200 leading-none z-0 pointer-events-none select-none">
+                  "
+                </span>
+                <p class="relative z-10 font-fa text-3xl md:text-6xl font-light leading-tight text-zinc-900 mb-8 mix-blend-multiply" dir="rtl">
+                  {whisper.message}
+                </p>
+                <div class="relative z-10 flex items-center gap-4 opacity-70">
+                  <span class="w-12 h-[1px] bg-zinc-900"></span>
+                  <span class="font-serif text-sm tracking-widest uppercase">{whisper.author}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- لایه زیرین: فوتر فرم (Reveal Effect) -->
+    <div id="whisper-footer" class="fixed bottom-0 left-0 w-full h-screen bg-zinc-950 text-[#e5dcd3] z-10 flex flex-col justify-center items-center px-4">
+      <div class="text-center mb-16">
+        <span class="font-serif text-xs tracking-[0.4em] uppercase text-zinc-500 mb-4 block">Leave Your Mark</span>
+        <h3 class="font-fa text-4xl md:text-6xl font-light mb-6">شما چه می‌گویید؟</h3>
+        <p class="font-fa text-zinc-400 font-light max-w-md mx-auto" dir="rtl">
+          تجربه خود از لمس محصولات سلپا را بنویسید. نجوای شما در این بایگانی جاودانه خواهد شد.
         </p>
       </div>
-
-      <!-- نقل‌قول‌های پراکنده (طراحی آوانگارد) -->
-      <div className="flex flex-col gap-32 mb-40">
-        {iconicReviews.map((review, i) => (
-          <div className={`flex flex-col w-full max-w-3xl ${i % 2 === 0 ? 'self-end text-right' : 'self-start text-left'}`} dir="rtl">
-            <span className="font-serif text-8xl text-zinc-800 leading-[0] mb-8 font-serif">"</span>
-            <p className="font-fa text-3xl md:text-5xl font-light leading-tight text-zinc-300 mb-8">
-              {review.text}
-            </p>
-            <span className="font-serif text-sm tracking-widest text-zinc-500 uppercase">— {review.author}</span>
-          </div>
-        ))}
-      </div>
-
-      <!-- بخش ارسال پیام -->
-      <div className="mt-40 pt-40 border-t border-zinc-900">
-        <div className="text-center mb-20">
-          <h2 className="font-display text-5xl md:text-7xl mb-6">شما چه می‌گویید؟</h2>
-          <p className="font-fa text-zinc-500 text-lg">ردپای خود را در بایگانی سلپا به جا بگذارید.</p>
-        </div>
+      
+      <div class="w-full max-w-2xl">
         <WhisperForm client:load />
       </div>
-
     </div>
+
   </main>
+
+  <script>
+    import gsap from 'gsap';
+    import ScrollTrigger from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ۱. افکت پارالاکس فرم (پرده‌برداری از زیر)
+    const gallery = document.getElementById('whispers-gallery');
+    
+    if (gallery) {
+      const mainElement = document.getElementById('whispers-main');
+      if (mainElement) {
+        mainElement.style.paddingBottom = '100vh';
+      }
+
+      // افکت محو شدن لایه بالایی و ظاهر شدن فوتر
+      gsap.fromTo('#whisper-footer', 
+        { yPercent: 30, opacity: 0.5 },
+        { 
+          yPercent: 0, 
+          opacity: 1, 
+          ease: 'none',
+          scrollTrigger: {
+            trigger: gallery,
+            start: 'bottom bottom',
+            end: '+=100%',
+            scrub: true
+          }
+        }
+      );
+
+      // انیمیشن نرم ظاهر شدن تک‌تک نجواها هنگام اسکرول
+      const items = gsap.utils.toArray('.whisper-item');
+      items.forEach((item: any, i) => {
+        gsap.fromTo(item, 
+          { y: 100, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.5,
+            ease: 'power4.out',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 85%',
+            }
+          }
+        );
+      });
+
+      // ۲. اسکرول سینماتیک در لحظه ورود
+      // یک تاخیر کوتاه می‌دهیم تا DOM کاملا لود شود
+      setTimeout(() => {
+        window.scrollTo({ top: 0 }); // ابتدا مطمئن می‌شویم صفحه از بالا شروع می‌شود
+        gsap.to(window, {
+          scrollTo: window.innerHeight * 0.5, // اسکرول نرم به اندازه نصف صفحه به پایین
+          duration: 2.5,
+          ease: 'power3.inOut',
+          delay: 0.5 // مکث کوتاه برای خواندن کلمه نجواها
+        });
+      }, 100);
+    }
+  </script>
 </Layout>
