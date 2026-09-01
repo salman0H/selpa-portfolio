@@ -1,11 +1,28 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import SmoothScroller from '../components/SmoothScroller';
+import Hero from '../components/Hero';
+import PremiumProducts from '../components/PremiumProducts';
+import FloatingArchive from '../components/FloatingArchive';
+import ParallaxGallery from '../components/ParallaxGallery';
+import HorizontalGallery from '../components/HorizontalGallery';
+import TypographyManifesto from '../components/TypographyManifesto';
+import ContactExperience from '../components/ContactExperience';
+import SecretTrigger from '../components/SecretTrigger';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Selpa | Handcrafted Minimal Leather">
+  <SecretTrigger client:load />
+  
+  <SmoothScroller client:load>
+    <main>
+      <Hero client:load />
+      <PremiumProducts client:load />
+      <FloatingArchive client:load />
+      <ParallaxGallery client:load />
+      <HorizontalGallery client:load />
+      <TypographyManifesto client:load />
+      <ContactExperience client:load />
+    </main>
+  </SmoothScroller>
 </Layout>

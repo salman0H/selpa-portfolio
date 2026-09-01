@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WhisperForm from '../components/WhisperForm';
+
+// دیتاهای فرضی برای نظرات ماندگار
+const iconicReviews = [
+  { text: "این یک کیف نیست، یک قطعه معماری است که می‌توان آن را پوشید.", author: "A.R" },
+  { text: "بوی چرم خام و خطوط بی‌نقص. وقتی به دستم رسید متوجه شدم ماشین‌ها هرگز نمی‌توانند روح داشته باشند.", author: "Shabnam" },
+];
+---
+
+<Layout title="Selpa | The Whispers">
+  <main className="min-h-screen bg-zinc-950 text-[#e5dcd3] pt-40 pb-20 overflow-hidden">
+    
+    <div className="max-w-7xl mx-auto px-4 md:px-20 relative z-10">
+      
+      <!-- هدر صفحه -->
+      <div className="mb-40 border-b border-zinc-900 pb-10">
+        <span className="font-serif text-sm tracking-[0.5em] text-zinc-600 uppercase block mb-6">Hidden Archive</span>
+        <h1 className="font-display text-7xl md:text-[9rem] leading-none tracking-tight">
+          نجواها
+        </h1>
+        <p className="font-fa text-xl text-zinc-500 font-light mt-8 max-w-lg" dir="rtl">
+          صداهایی که در میان چرخ‌دنده‌های تولید انبوه گم نمی‌شوند. اینجا بایگانی تجربیات ناب کسانی است که سلپا را لمس کرده‌اند.
+        </p>
+      </div>
+
+      <!-- نقل‌قول‌های پراکنده (طراحی آوانگارد) -->
+      <div className="flex flex-col gap-32 mb-40">
+        {iconicReviews.map((review, i) => (
+          <div className={`flex flex-col w-full max-w-3xl ${i % 2 === 0 ? 'self-end text-right' : 'self-start text-left'}`} dir="rtl">
+            <span className="font-serif text-8xl text-zinc-800 leading-[0] mb-8 font-serif">"</span>
+            <p className="font-fa text-3xl md:text-5xl font-light leading-tight text-zinc-300 mb-8">
+              {review.text}
+            </p>
+            <span className="font-serif text-sm tracking-widest text-zinc-500 uppercase">— {review.author}</span>
+          </div>
+        ))}
+      </div>
+
+      <!-- بخش ارسال پیام -->
+      <div className="mt-40 pt-40 border-t border-zinc-900">
+        <div className="text-center mb-20">
+          <h2 className="font-display text-5xl md:text-7xl mb-6">شما چه می‌گویید؟</h2>
+          <p className="font-fa text-zinc-500 text-lg">ردپای خود را در بایگانی سلپا به جا بگذارید.</p>
+        </div>
+        <WhisperForm client:load />
+      </div>
+
+    </div>
+  </main>
+</Layout>
