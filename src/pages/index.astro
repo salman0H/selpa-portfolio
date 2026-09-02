@@ -1,40 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SmoothScroller from '../components/SmoothScroller';
-import Hero from '../components/Hero';
-import PremiumProducts from '../components/PremiumProducts';
-import FloatingArchive from '../components/FloatingArchive';
-import ParallaxGallery from '../components/ParallaxGallery';
-import HorizontalGallery from '../components/HorizontalGallery';
-import TypographyManifesto from '../components/TypographyManifesto';
-import ContactExperience from '../components/ContactExperience';
+import Preloader from '../components/Preloader';
 import SecretTrigger from '../components/SecretTrigger';
 import BackToTop from '../components/BackToTop';
 import WhispersOverlay from '../components/WhispersOverlay';
-import { db, Whisper, desc } from 'astro:db';
+import { db, Whisper } from 'astro:db';
 
-const whispers = await db.select().from(Whisper).orderBy(desc(Whisper.createdAt));
-const iconicWhispers = whispers.slice(0, 5);
+import Hero from '../components/Hero';
+import HorizontalGallery from '../components/HorizontalGallery';
+import PremiumProducts from '../components/PremiumProducts';
+import FloatingArchive from '../components/FloatingArchive';
+import ContactExperience from '../components/ContactExperience';
+
+const whispers = await db.select().from(Whisper);
 ---
 
-<Layout title="Selpa | Handcrafted Minimal Leather">
-  <!-- تریگر مخفی در بالاترین نقطه سایت قرار دارد -->
-  <SecretTrigger client:load />
-  <BackToTop client:load />
+<Layout title="Selpa | Bespoke Leather Craft">
+  
+  <Preloader client:load />
 
+  <main class="relative w-full overflow-hidden bg-[#e5dcd3]">
+    <SecretTrigger client:load />
+    
+    <Hero client:load />
+
+    <PremiumProducts client:load />
+    
+    <HorizontalGallery client:load />
+    
+    <FloatingArchive client:load />
+    
+    <ContactExperience client:load />
+  </main>
+
+  <WhispersOverlay whispers={whispers} client:load />
+  <BackToTop client:load />
   
-  <!-- لایه جادویی ما که به صورت پیش‌فرض مخفی است و URL را تغییر نمی‌دهد -->
-  <WhispersOverlay client:load whispers={iconicWhispers} />
-  
-  <SmoothScroller client:load>
-    <main>
-      <Hero client:load />
-      <PremiumProducts client:load />
-      <FloatingArchive client:load />
-      <ParallaxGallery client:load />
-      <HorizontalGallery client:load />
-      <TypographyManifesto client:load />
-      <ContactExperience client:load />
-    </main>
-  </SmoothScroller>
 </Layout>

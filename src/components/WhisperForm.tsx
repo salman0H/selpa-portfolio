@@ -16,9 +16,7 @@ export default function WhisperForm() {
         method: 'POST',
         body: formData,
       });
-
       const result = await response.json();
-
       if (response.ok) {
         setStatus('success');
       } else {
@@ -37,7 +35,6 @@ export default function WhisperForm() {
         { opacity: 0, scale: 0.9, y: 50 },
         { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: 'power4.out' }
       );
-
       setTimeout(() => {
         window.dispatchEvent(new CustomEvent('exitWhispers'));
       }, 4000);
@@ -59,47 +56,34 @@ export default function WhisperForm() {
   }
 
   return (
-    <>
-      {/* استایل مخفی برای سرکوب کردن کادر سفید Autofill مرورگر */}
-      <style>{`
-        input:-webkit-autofill,
-        textarea:-webkit-autofill {
-          -webkit-box-shadow: 0 0 0px 1000px #09090b inset !important;
-          -webkit-text-fill-color: #e5dcd3 !important;
-          transition: background-color 5000s ease-in-out 0s;
-        }
-      `}</style>
-
-      {/* اضافه کردن autoComplete="off" به فرم */}
-      <form onSubmit={handleSubmit} autoComplete="off" className="flex flex-col gap-8 w-full" dir="rtl">
-        <div className="relative group">
-          <input 
-            type="text" 
-            name="author"
-            required
-            autoComplete="off"
-            placeholder="نام خالق اثر (شما)..." 
-            className="w-full bg-transparent border-b border-zinc-800 py-4 font-fa text-xl text-[#e5dcd3] placeholder:text-zinc-700 focus:outline-none focus:border-[#e5dcd3] transition-colors"
-          />
-        </div>
-        <div className="relative group">
-          <textarea 
-            name="message"
-            required
-            rows={3}
-            autoComplete="off"
-            placeholder="شکل، بافت و کاربرد قطعه‌ی رویایی خود را شرح دهید..." 
-            className="w-full bg-transparent border-b border-zinc-800 py-4 font-fa text-xl text-[#e5dcd3] placeholder:text-zinc-700 focus:outline-none focus:border-[#e5dcd3] transition-colors resize-none"
-          ></textarea>
-        </div>
-        <button 
-          type="submit" 
-          disabled={status === 'loading'}
-          className="self-center md:self-end mt-8 px-16 py-5 bg-[#e5dcd3] text-zinc-950 font-fa font-bold text-lg rounded-full hover:scale-105 transition-transform duration-300 disabled:opacity-50 disabled:hover:scale-100"
-        >
-          {status === 'loading' ? 'در حال اتصال...' : 'ثبت رویای چرمی'}
-        </button>
-      </form>
-    </>
+    <form onSubmit={handleSubmit} autoComplete="off" className="flex flex-col gap-8 w-full" dir="rtl">
+      <div className="relative group">
+        <input 
+          type="text" 
+          name="author"
+          required
+          autoComplete="off"
+          placeholder="نام خالق اثر (شما)..." 
+          className="w-full bg-transparent border-b border-zinc-800 py-4 font-fa text-xl text-[#e5dcd3] placeholder:text-zinc-700 focus:outline-none focus:border-[#e5dcd3] transition-colors"
+        />
+      </div>
+      <div className="relative group">
+        <textarea 
+          name="message"
+          required
+          rows={3}
+          autoComplete="off"
+          placeholder="شکل، بافت و کاربرد قطعه‌ی رویایی خود را شرح دهید..." 
+          className="w-full bg-transparent border-b border-zinc-800 py-4 font-fa text-xl text-[#e5dcd3] placeholder:text-zinc-700 focus:outline-none focus:border-[#e5dcd3] transition-colors resize-none"
+        ></textarea>
+      </div>
+      <button 
+        type="submit" 
+        disabled={status === 'loading'}
+        className="self-center md:self-end mt-8 px-16 py-5 bg-[#e5dcd3] text-zinc-950 font-fa font-bold text-lg rounded-full hover:scale-105 transition-transform duration-300 disabled:opacity-50 disabled:hover:scale-100"
+      >
+        {status === 'loading' ? 'در حال اتصال...' : 'ثبت رویای چرمی'}
+      </button>
+    </form>
   );
 }

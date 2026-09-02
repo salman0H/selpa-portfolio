@@ -37,7 +37,7 @@ export default function PremiumProducts() {
   const container = useRef<HTMLDivElement>(null);
 
   const handleOrderClick = () => {
-    // اسکرول بومی مستقیماً به سمت سکشن تماس
+    // Use native scrolling directly to the contact section
     document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 

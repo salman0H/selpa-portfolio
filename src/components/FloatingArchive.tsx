@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-// فیکس طلایی برای محیط SSR در Astro
+// Reliable setup for Astro's SSR environment
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'; 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -56,10 +56,10 @@ export default function FloatingArchive() {
           {collection.map((item) => (
             <div 
               key={item.id} 
-              // GSAP این لایه را اسکرول می‌کند
+              // GSAP scrolls this layer
               className={`floating-item absolute ${item.position} ${item.width} pointer-events-auto`}
             >
-              {/* Tailwind این لایه داخلی را زوم می‌کند (بدون تداخل با GSAP) */}
+              {/* Tailwind zooms this inner layer without interfering with GSAP */}
               <div className="relative group transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-[1.15] hover:z-50 hover:shadow-2xl hover:shadow-black/80">
                 
                 <div className="w-full h-auto overflow-hidden bg-zinc-900 border border-zinc-800 product-hover">

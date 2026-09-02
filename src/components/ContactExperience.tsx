@@ -36,7 +36,7 @@ export default function ContactExperience() {
   }, []);
 
   return (
-    // با قرار دادن z-50 این لایه روی تمام عکس‌های پراکنده آرشیو قرار می‌گیرد
+    // z-50 places this layer above all scattered archive images
     <section id="contact-section" ref={container} className="relative z-50 w-full min-h-screen bg-[#e5dcd3] text-zinc-900 py-32 px-4 md:px-20 overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-20">
         

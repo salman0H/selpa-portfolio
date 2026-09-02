@@ -27,6 +27,9 @@ export default function WhispersOverlay({ whispers }: { whispers: any[] }) {
     if (isExiting.current || !containerRef.current) return;
     isExiting.current = true;
 
+    // --- This signal switches the hero state ---
+    window.dispatchEvent(new CustomEvent('whispersReturned'));
+
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
 
@@ -40,7 +43,6 @@ export default function WhispersOverlay({ whispers }: { whispers: any[] }) {
       onComplete: () => {
         setIsOpen(false);
         isExiting.current = false;
-        // خروج سینماتیک و پرواز به بالا با اسکرول بومی
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });

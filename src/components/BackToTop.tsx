@@ -18,7 +18,7 @@ export default function BackToTop() {
   }, []);
 
   const goTop = () => {
-    // استفاده از اسکرول نرم بومی مرورگر (بدون باگ GSAP)
+    // Use the browser's native smooth scrolling without GSAP issues
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

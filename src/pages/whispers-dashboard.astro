@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { db, Whisper, desc } from 'astro:db';
 
-// دریافت تمام نجواها
+// Fetch all whispers
 const allWhispers = await db.select().from(Whisper).orderBy(desc(Whisper.createdAt));
 
 console.log('📊 Dashboard - تعداد نجواها:', allWhispers.length);
@@ -13,7 +13,7 @@ console.log('💬 نجواهای دریافتی:', allWhispers);
   <main class="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-[#e5dcd3] p-8">
     <div class="max-w-6xl mx-auto">
       
-      {/* هدر */}
+      {/* Header */}
       <div class="mb-16">
         <h1 class="font-art text-6xl md:text-7xl mb-4">نجواها</h1>
         <p class="text-lg text-zinc-400">
@@ -21,7 +21,7 @@ console.log('💬 نجواهای دریافتی:', allWhispers);
         </p>
       </div>
 
-      {/* آمار */}
+      {/* Statistics */}
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div class="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
           <p class="text-zinc-400 text-sm mb-2">تعداد کل نجواها</p>
@@ -37,7 +37,7 @@ console.log('💬 نجواهای دریافتی:', allWhispers);
         </div>
       </div>
 
-      {/* لیست نجواها */}
+      {/* Whispers list */}
       <div class="space-y-6">
         <h2 class="text-2xl font-bold mb-8">تمام نجواها</h2>
         
@@ -49,7 +49,7 @@ console.log('💬 نجواهای دریافتی:', allWhispers);
           <div class="grid gap-6">
             {allWhispers.map((whisper, i) => (
               <div key={whisper.id} class="bg-zinc-800/50 border border-zinc-700 rounded-lg p-8 hover:bg-zinc-800/70 transition-all">
-                {/* شماره و تاریخ */}
+                {/* Number and date */}
                 <div class="flex justify-between items-start mb-4">
                   <span class="text-xs font-mono bg-zinc-700 text-zinc-300 px-3 py-1 rounded">
                     #{whisper.id}
@@ -57,12 +57,12 @@ console.log('💬 نجواهای دریافتی:', allWhispers);
                   <span class="text-xs text-zinc-500 font-mono">{whisper.createdAt}</span>
                 </div>
                 
-                {/* متن نجوا */}
+                {/* Whisper text */}
                 <p class="text-xl font-fa font-light leading-relaxed text-[#e5dcd3] mb-6 py-4 border-l-4 border-[#e5dcd3]/30 pl-4" dir="rtl">
                   "{whisper.message}"
                 </p>
                 
-                {/* نویسنده */}
+                {/* Author */}
                 <div class="flex items-center gap-3 text-sm">
                   <span class="text-zinc-500">—</span>
                   <span class="font-serif tracking-wider text-zinc-300">{whisper.author}</span>
@@ -76,7 +76,7 @@ console.log('💬 نجواهای دریافتی:', allWhispers);
         )}
       </div>
 
-      {/* فوتر */}
+      {/* Footer */}
       <div class="mt-20 pt-8 border-t border-zinc-700 text-center text-zinc-500 text-sm">
         <p>این صفحه فقط برای مدیریت و نمایش داده‌ها است</p>
         <p class="mt-2">

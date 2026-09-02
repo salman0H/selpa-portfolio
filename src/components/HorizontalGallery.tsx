@@ -26,21 +26,21 @@ export default function HorizontalGallery() {
         trigger: container.current,
         pin: true,
         scrub: 1,
-        // تغییر ۱: استفاده از عرض دقیق مانیتور به جای عرض داینامیک المان
+        // 1. Use the exact viewport width instead of the dynamic element width
         end: () => `+=${window.innerWidth * (sections.length - 1)}`,
-        // تغییر ۲: پیش‌بینی پین شدن برای جلوگیری از پرش ناگهانی
+        // 2. Anticipate pinning to prevent sudden jumps
         anticipatePin: 1, 
-        // تغییر ۳: اجبار به محاسبه مجدد نقاط اسکرول در صورت تغییر لایه‌ها
+        // 3. Recalculate scroll positions when layers change
         invalidateOnRefresh: true, 
       }
     });
 
-    // تغییر ۴: یک تاخیر کوتاه برای رفرش کردن محاسبات GSAP بعد از رندر شدن کامل DOM و لود عکس‌های بالای صفحه
+    // 4. Briefly delay the GSAP refresh until the DOM and above-the-fold images load
     const refreshTimeout = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 500);
 
-    // تغییر ۵: اطمینان از رفرش شدن محاسبات هنگام لود کامل دارایی‌های صفحه
+    // 5. Refresh calculations when all page assets finish loading
     const handleLoad = () => ScrollTrigger.refresh();
     window.addEventListener('load', handleLoad);
 

@@ -10,11 +10,11 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!dotRef.current || !ringRef.current || !textRef.current) return;
 
-    // نقطه مرکزی (سرعت بالا - بدون تاخیر)
+    // Center dot (high speed, no delay)
     const dotX = gsap.quickTo(dotRef.current, "x", { duration: 0.05, ease: "power4.out" });
     const dotY = gsap.quickTo(dotRef.current, "y", { duration: 0.05, ease: "power4.out" });
 
-    // حلقه بیرونی (سرعت پایین‌تر - فیزیک فنری)
+    // Outer ring (slower speed, spring physics)
     const ringX = gsap.quickTo(ringRef.current, "x", { duration: 0.4, ease: "power3.out" });
     const ringY = gsap.quickTo(ringRef.current, "y", { duration: 0.4, ease: "power3.out" });
 
@@ -27,7 +27,7 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', moveCursor);
 
-    // افکت‌ها برای عناصر تعاملی
+    // Effects for interactive elements
     const interactiveElements = document.querySelectorAll('a, button');
     const productElements = document.querySelectorAll('.product-hover');
 
@@ -87,7 +87,7 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* حلقه بیرونی با قابلیت نمایش متن */}
+      {/* Outer ring with text support */}
       <div
         ref={ringRef}
         className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#e5dcd3]/30 pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center mix-blend-difference overflow-hidden"
@@ -97,7 +97,7 @@ export default function CustomCursor() {
         </span>
       </div>
       
-      {/* نقطه مرکزی */}
+      {/* Center dot */}
       <div
         ref={dotRef}
         className="fixed top-0 left-0 w-1.5 h-1.5 bg-[#e5dcd3] rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 mix-blend-difference"

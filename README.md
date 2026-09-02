@@ -1,46 +1,44 @@
-# Astro Starter Kit: Basics
+# SELPA | Bespoke Leather Craft
 
-```sh
-npm create astro@latest -- --template basics
-```
+> An interactive, highly minimalist luxury portfolio and hidden archive for a bespoke leather craft atelier.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+![Selpa Hero Section](/public/images/screenshots/hero.png)
 
-## 🚀 Project Structure
+Selpa is a digital experience designed to reflect the authenticity, texture, and deep storytelling of handcrafted leather goods. Built with a focus on fluid typography, cinematic transitions, and a hidden "discovery reward" system.
 
-Inside of your Astro project, you'll see the following folders and files:
+## ❖ Visual Experience
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+The architecture of the user interface relies heavily on negative space, premium typography harmonization, and custom GSAP interactions to create an Awwwards-tier browsing experience.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+- **Cinematic Preloader:** A staggered, typographic loading sequence.
+- **Fluid Smart Cursor:** Custom `mix-blend-difference` cursor tracking.
+- **The Hidden Archive:** A secret scroll-triggered database fetching user "Whispers".
+- **Dynamic Hero States:** The hero section logically adapts and transforms after the user discovers the hidden archive.
 
-## 🧞 Commands
+## ❖ Previews
 
-All commands are run from the root of the project, from a terminal:
+| The Hidden Archive | Premium Products |
+| :---: | :---: |
+| ![Archive](/public/images/screenshots/whisper.png) | ![Products](./public/images/screenshots/products.png) |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## ❖ Tech Stack
 
-## 👀 Want to learn more?
+Engineered for extreme performance and seamless animations:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Framework:** Astro
+- **UI Library:** React
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animations:** GSAP & ScrollTrigger
+- **Database:** Astro DB
+
+## ❖ Local Development
+
+To run this project locally, execute the following commands:
+
+```bash
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev

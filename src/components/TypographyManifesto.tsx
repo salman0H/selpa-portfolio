@@ -27,7 +27,7 @@ export default function TypographyManifesto() {
     });
   }, { scope: container });
 
-  // منطق دنبال کردن موس برای عکس شناور (بالاترین پرفورمنس با quickTo)
+  // Mouse-follow logic for the floating image (high performance with quickTo)
   useEffect(() => {
     if (!hoverImageRef.current) return;
     
@@ -35,7 +35,7 @@ export default function TypographyManifesto() {
     const yMove = gsap.quickTo(hoverImageRef.current, "y", { duration: 0.4, ease: "power3" });
 
     const moveImage = (e: MouseEvent) => {
-      xMove(e.clientX - 150); // آفست برای مرکز تصویر
+      xMove(e.clientX - 150); // Offset to center the image
       yMove(e.clientY - 200);
     };
 
@@ -54,7 +54,7 @@ export default function TypographyManifesto() {
   return (
     <section ref={container} className="relative w-full py-40 md:py-60 bg-zinc-950 text-[#e5dcd3] overflow-hidden">
       
-      {/* عکس شناوری که موس را دنبال می‌کند */}
+      {/* Floating image that follows the mouse */}
       <div 
         ref={hoverImageRef} 
         className="fixed top-0 left-0 w-[300px] h-[400px] pointer-events-none z-50 scale-0 opacity-0 overflow-hidden"
@@ -62,7 +62,7 @@ export default function TypographyManifesto() {
         <img src="/images/desk-raw.jpg" alt="Craft Texture" className="w-full h-full object-cover grayscale" />
       </div>
 
-      {/* نستعلیق غول‌پیکر در پس‌زمینه برای تضاد آوانگارد */}
+      {/* Oversized calligraphy in the background for avant-garde contrast */}
       <div className="bg-typography absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none opacity-[0.04] select-none text-[30vw] font-art whitespace-nowrap text-zinc-100">
         اصالت پنهان
       </div>
@@ -84,7 +84,7 @@ export default function TypographyManifesto() {
             <h2 className="reveal-line font-fa font-light text-5xl md:text-[6rem] leading-tight text-zinc-300">
               که با گذشت
             </h2>
-            {/* کلمه تعاملی */}
+            {/* Interactive word */}
             <span 
               className="reveal-line hover-reveal font-serif italic text-6xl md:text-[7rem] text-zinc-500 translate-y-2 relative"
               onMouseEnter={() => setIsHovering(true)}

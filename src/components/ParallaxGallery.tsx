@@ -5,7 +5,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// دیتابیس محصولات تکمیلی
+// Additional product catalog
 const extraProducts = [
   { id: 1, src: '/images/extra-1.jpg', title: 'Minimal Belt', category: 'Accessories', col: 1 },
   { id: 2, src: '/images/extra-2.jpg', title: 'Card Holder', category: 'Essentials', col: 2 },
@@ -19,7 +19,7 @@ export default function ParallaxGallery() {
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // ایجاد تضاد حرکتی بین ستون‌ها (Parallax)
+    // Create contrasting motion between the columns (parallax)
     gsap.to('.gallery-col-1', {
       yPercent: -20,
       ease: 'none',
@@ -32,7 +32,7 @@ export default function ParallaxGallery() {
     });
 
     gsap.to('.gallery-col-2', {
-      yPercent: 25, // حرکت در جهت مخالف/کندتر
+      yPercent: 25, // Move in the opposite, slower direction
       ease: 'none',
       scrollTrigger: {
         trigger: container.current,
@@ -65,7 +65,7 @@ export default function ParallaxGallery() {
               className="w-full h-auto object-cover aspect-[3/4] grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
             />
           </div>
-          {/* توضیحات محصول که با هاور ظاهر می‌شود */}
+          {/* Product details revealed on hover */}
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center text-center p-4">
             <h4 className="font-serif text-2xl text-[#e5dcd3] uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
               {product.title}
@@ -94,10 +94,10 @@ export default function ParallaxGallery() {
         </p>
       </div>
 
-      {/* گرید پارالاکس */}
+      {/* Parallax grid */}
       <div className="max-w-7xl mx-auto px-4 md:px-20 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 h-[150vh] md:h-[180vh] overflow-hidden">
         {renderColumn(1, 'gallery-col-1')}
-        {/* ستون میانی با آفست منفی شروع می‌شود تا جای حرکت به پایین داشته باشد */}
+        {/* Start the middle column with a negative offset to allow room for downward movement */}
         {renderColumn(2, 'gallery-col-2', 'md:-mt-[30vh]')} 
         {renderColumn(3, 'gallery-col-3', 'md:mt-[15vh]')}
       </div>

@@ -5,7 +5,7 @@ import db from '@astrojs/db';
 import node from '@astrojs/node';
 
 export default defineConfig({
-  output: 'static', // این کلمه را جایگزین hybrid کردیم
+  output: 'static', // Replaced hybrid output
   adapter: node({
     mode: 'standalone'
   }),

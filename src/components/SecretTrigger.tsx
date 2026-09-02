@@ -8,27 +8,41 @@ export default function SecretTrigger() {
   useEffect(() => {
     let pullAmount = 0;
     let isTriggered = false;
+    let isLocked = false; // System safety lock
+
+    // Lock the trigger when the whispers page opens
+    const handleOpen = () => { isLocked = true; };
+    
+    // Keep the trigger locked during the four-second exit animation to cancel scroll momentum
+    const handleExit = () => { 
+      setTimeout(() => { isLocked = false; }, 4000); 
+    };
+
+    window.addEventListener('openWhispers', handleOpen);
+    window.addEventListener('exitWhispers', handleExit);
 
     const handleWheel = (e: WheelEvent) => {
-      // فقط زمانی که در بالاترین نقطه سایت هستیم و به بالا اسکرول میکنیم
+      // Ignore all scrolling while the system is locked
+      if (isLocked) {
+        pullAmount = 0;
+        return;
+      }
+
       if (window.scrollY <= 0 && e.deltaY < 0 && !isTriggered) {
         pullAmount += Math.abs(e.deltaY);
         
-        // کاربر فقط 150 پیکسل اسکرول کند کافیست
         const progress = Math.min(pullAmount / 150, 1);
         
-        // افکت محو شدن صفحه زیرین و ایجاد مه تاریک
         gsap.to(overlayRef.current, { 
           opacity: progress, 
           backdropFilter: `blur(${progress * 15}px)`,
           duration: 0.1 
         });
 
-        // وقتی به حد نصاب رسید، خودش بقیه کارها را اتوماتیک انجام می‌دهد
         if (progress >= 1) {
           isTriggered = true;
+          isLocked = true; // Lock the system immediately after triggering
           
-          // انیمیشن نجواگونه متن (بزرگ شدن و درخشش)
           gsap.to(textRef.current, { 
             opacity: 1, 
             scale: 1.05, 
@@ -36,11 +50,9 @@ export default function SecretTrigger() {
             ease: "power3.out" 
           });
           
-          // بعد از ۱.۵ ثانیه تماشای افکت، اتوماتیک وارد نجواها می‌شود
           setTimeout(() => {
             window.dispatchEvent(new CustomEvent('openWhispers'));
             
-            // ریست کردن تریگر در پس‌زمینه برای دفعات بعد
             setTimeout(() => {
               pullAmount = 0;
               isTriggered = false;
@@ -50,7 +62,6 @@ export default function SecretTrigger() {
           }, 1500);
         }
       } else if (pullAmount > 0 && !isTriggered) {
-        // اگر کاربر اسکرول را رها کرد، مه به آرامی از بین می‌رود
         pullAmount = Math.max(0, pullAmount - 15);
         gsap.to(overlayRef.current, { 
           opacity: Math.min(pullAmount / 150, 1),
@@ -60,7 +71,11 @@ export default function SecretTrigger() {
     };
 
     window.addEventListener('wheel', handleWheel);
-    return () => window.removeEventListener('wheel', handleWheel);
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('openWhispers', handleOpen);
+      window.removeEventListener('exitWhispers', handleExit);
+    };
   }, []);
 
   return (
@@ -68,7 +83,6 @@ export default function SecretTrigger() {
       ref={overlayRef} 
       className="fixed inset-0 z-[99999] opacity-0 pointer-events-none bg-zinc-950/70 transition-all duration-100 flex items-center justify-center"
     >
-      {/* افکت نور شعاعی و مرموز به جای نویز */}
       <div 
         className="absolute inset-0 opacity-40 mix-blend-screen" 
         style={{ background: 'radial-gradient(circle at center, #ffffff 0%, transparent 50%)', filter: 'blur(50px)' }}

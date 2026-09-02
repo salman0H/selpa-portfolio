@@ -5,18 +5,18 @@ import { db, Whisper, desc } from 'astro:db';
 
 const whispers = await db.select().from(Whisper).orderBy(desc(Whisper.createdAt));
 
-// انتخاب ۵ نجوای اخیر برای نمایش آیکانیک
+// Select the five latest whispers for the iconic display
 const iconicWhispers = whispers.slice(0, 5);
 ---
 
 <Layout title="Selpa | The Whispers">
   <main id="whispers-main" class="relative min-h-screen bg-[#e5dcd3] text-zinc-950 overflow-hidden">
     
-    <!-- لایه رویی: گالری نجواها -->
+    <!-- Top layer: whispers gallery -->
     <div id="whispers-gallery" class="relative z-20 w-full bg-[#e5dcd3] pb-32 rounded-b-[4rem] shadow-2xl shadow-black/20">
       
       <div class="h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
-        <!-- تایپوگرافی پس‌زمینه -->
+        <!-- Background typography -->
         <h1 class="absolute z-0 font-serif text-[25vw] text-zinc-300 leading-none uppercase tracking-tighter mix-blend-multiply opacity-50 pointer-events-none select-none">
           WHISPERS
         </h1>
@@ -30,7 +30,7 @@ const iconicWhispers = whispers.slice(0, 5);
         </div>
       </div>
 
-      <!-- گالری نظرات پراکنده -->
+      <!-- Scattered testimonials gallery -->
       <div class="max-w-7xl mx-auto px-4 md:px-20 mt-20">
         {iconicWhispers.length === 0 ? (
           <p class="font-fa text-center text-zinc-500 text-2xl italic my-40">سکوت مطلق. اولین نجوا را شما ثبت کنید.</p>
@@ -38,7 +38,7 @@ const iconicWhispers = whispers.slice(0, 5);
           <div class="flex flex-col gap-40 md:gap-60 pb-40">
             {iconicWhispers.map((whisper, i) => (
               <div class={`whisper-item relative flex flex-col w-full max-w-4xl ${i % 2 === 0 ? 'md:self-end md:text-right md:items-end' : 'md:self-start md:text-left md:items-start'}`} dir={i % 2 === 0 ? 'rtl' : 'ltr'}>
-                <!-- کوتیشن مارک غول‌پیکر در پس‌زمینه -->
+                <!-- Oversized quotation mark in the background -->
                 <span class="absolute -top-20 md:-top-32 font-serif text-[15rem] md:text-[20rem] text-zinc-200 leading-none z-0 pointer-events-none select-none">
                   "
                 </span>
@@ -56,7 +56,7 @@ const iconicWhispers = whispers.slice(0, 5);
       </div>
     </div>
 
-    <!-- لایه زیرین: فوتر فرم (Reveal Effect) -->
+    <!-- Bottom layer: form footer (reveal effect) -->
     <div id="whisper-footer" class="fixed bottom-0 left-0 w-full h-screen bg-zinc-950 text-[#e5dcd3] z-10 flex flex-col justify-center items-center px-4">
       <div class="text-center mb-16">
         <span class="font-serif text-xs tracking-[0.4em] uppercase text-zinc-500 mb-4 block">Leave Your Mark</span>
@@ -79,7 +79,7 @@ const iconicWhispers = whispers.slice(0, 5);
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // ۱. افکت پارالاکس فرم (پرده‌برداری از زیر)
+    // 1. Form parallax reveal effect
     const gallery = document.getElementById('whispers-gallery');
     
     if (gallery) {
@@ -88,7 +88,7 @@ const iconicWhispers = whispers.slice(0, 5);
         mainElement.style.paddingBottom = '100vh';
       }
 
-      // افکت محو شدن لایه بالایی و ظاهر شدن فوتر
+      // Fade the top layer and reveal the footer
       gsap.fromTo('#whisper-footer', 
         { yPercent: 30, opacity: 0.5 },
         { 
@@ -104,7 +104,7 @@ const iconicWhispers = whispers.slice(0, 5);
         }
       );
 
-      // انیمیشن نرم ظاهر شدن تک‌تک نجواها هنگام اسکرول
+      // Smoothly reveal each whisper while scrolling
       const items = gsap.utils.toArray('.whisper-item');
       items.forEach((item: any, i) => {
         gsap.fromTo(item, 
@@ -122,15 +122,15 @@ const iconicWhispers = whispers.slice(0, 5);
         );
       });
 
-      // ۲. اسکرول سینماتیک در لحظه ورود
-      // یک تاخیر کوتاه می‌دهیم تا DOM کاملا لود شود
+      // 2. Cinematic scroll on entry
+      // Wait briefly for the DOM to finish loading
       setTimeout(() => {
-        window.scrollTo({ top: 0 }); // ابتدا مطمئن می‌شویم صفحه از بالا شروع می‌شود
+        window.scrollTo({ top: 0 }); // Ensure the page starts at the top
         gsap.to(window, {
-          scrollTo: window.innerHeight * 0.5, // اسکرول نرم به اندازه نصف صفحه به پایین
+          scrollTo: window.innerHeight * 0.5, // Smoothly scroll down by half a viewport
           duration: 2.5,
           ease: 'power3.inOut',
-          delay: 0.5 // مکث کوتاه برای خواندن کلمه نجواها
+          delay: 0.5 // Brief pause to read the whispers heading
         });
       }, 100);
     }
