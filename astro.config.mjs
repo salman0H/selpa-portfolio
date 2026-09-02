@@ -2,11 +2,11 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import db from '@astrojs/db';
-import netlify from '@astrojs/netlify';
+import vercel from '@astrojs/vercel/serverless';
 
 export default defineConfig({
   output: 'server',
-  adapter: netlify(),
+  adapter: vercel(),
   integrations: [react(), db()],
   vite: {
     plugins: [tailwindcss()],
