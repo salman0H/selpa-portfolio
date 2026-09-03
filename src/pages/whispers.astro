@@ -3,9 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import WhisperForm from '../components/WhisperForm';
 import { db, Whisper, desc } from 'astro:db';
 
-const whispers = await db.select().from(Whisper).orderBy(desc(Whisper.createdAt));
+let whispers: any[] = [];
+try {
+  whispers = await db.select().from(Whisper).orderBy(desc(Whisper.createdAt));
+} catch (e) {
+  console.error('Failed to load whispers:', e);
+}
 
-// Select the five latest whispers for the iconic display
 const iconicWhispers = whispers.slice(0, 5);
 ---
 

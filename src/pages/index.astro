@@ -12,7 +12,12 @@ import PremiumProducts from '../components/PremiumProducts';
 import FloatingArchive from '../components/FloatingArchive';
 import ContactExperience from '../components/ContactExperience';
 
-const whispers = await db.select().from(Whisper);
+let whispers: any[] = [];
+try {
+  whispers = await db.select().from(Whisper);
+} catch (e) {
+  console.error('Failed to load whispers:', e);
+}
 ---
 
 <Layout title="Selpa | Bespoke Leather Craft">
