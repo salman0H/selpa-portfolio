@@ -2,9 +2,11 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 // Reliable setup for Astro's SSR environment
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'; 
+import { ScrollTrigger } from 'gsap/ScrollTrigger'; 
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const collection = [
   { id: 1, src: '/images/image_20812b.jpg', title: 'Black Clutch', speed: -100, width: 'w-[65vw] md:w-[25vw]', position: 'left-[5%] top-[10%]' },
