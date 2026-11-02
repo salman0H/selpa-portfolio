@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Preloader from '../components/Preloader';
 import SecretTrigger from '../components/SecretTrigger';
 import BackToTop from '../components/BackToTop';
 import WhispersOverlay from '../components/WhispersOverlay';
@@ -22,20 +21,25 @@ try {
 
 <Layout title="Selpa | Bespoke Leather Craft">
   
-  <Preloader client:load />
 
+
+  <a class="skip-link font-fa" href="#selected-works">رفتن به آثار</a>
+  <nav class="site-nav" aria-label="ناوبری اصلی">
+    <a href="#top" class="brand font-serif" aria-label="سلپا، ابتدای صفحه">SELPA<span>آتلیه چرم</span></a>
+    <div class="font-fa"><a href="#selected-works">آثار</a><a href="#archive">آرشیو</a><a href="#contact-section">ارتباط و سفارش ↖</a></div>
+  </nav>
   <main class="relative w-full overflow-hidden bg-[#e5dcd3]">
     <SecretTrigger client:load />
     
     <Hero client:load />
 
-    <PremiumProducts client:load />
+    <PremiumProducts client:visible />
     
     <HorizontalGallery client:load />
     
-    <FloatingArchive client:load />
+    <FloatingArchive />
     
-    <ContactExperience client:load />
+    <ContactExperience client:visible />
   </main>
 
   <WhispersOverlay whispers={whispers} client:load />

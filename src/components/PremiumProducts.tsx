@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpLeft } from 'lucide-react';
+import ResponsiveImage from './ResponsiveImage';
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -29,7 +30,7 @@ const products = [
     id: '03',
     titleEn: "Minimal Wallet",
     titleFa: "کیف پول مینیمال",
-    image: "/images/slider-final.jpg", 
+    image: "/images/slider-final.jpg",
     desc: "طراحی هندسی با لبه‌های پرداخت شده ارگانیک.",
     alignment: "items-start"
   }
@@ -38,73 +39,72 @@ const products = [
 export default function PremiumProducts() {
   const container = useRef<HTMLDivElement>(null);
 
-  const handleOrderClick = () => {
-    // Use native scrolling directly to the contact section
-    document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   useGSAP(() => {
-    const rows = gsap.utils.toArray('.product-row');
+    const media = gsap.matchMedia();
+    media.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+      const rows = gsap.utils.toArray('.product-row');
 
-    rows.forEach((row: any) => {
-      const imageContainer = row.querySelector('.img-container');
-      const image = row.querySelector('.parallax-img');
-      const textBlock = row.querySelector('.text-parallax');
-      const line = row.querySelector('.reveal-line');
+      rows.forEach((row: any) => {
+        const imageContainer = row.querySelector('.img-container');
+        const image = row.querySelector('.parallax-img');
+        const textBlock = row.querySelector('.text-parallax');
+        const line = row.querySelector('.reveal-line');
 
-      gsap.fromTo(imageContainer, 
-        { clipPath: 'inset(100% 0% 0% 0%)' },
-        {
-          clipPath: 'inset(0% 0% 0% 0%)',
-          duration: 1.5,
-          ease: 'power4.inOut',
+        gsap.fromTo(imageContainer,
+          { clipPath: 'inset(100% 0% 0% 0%)' },
+          {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            duration: 1.5,
+            ease: 'power4.inOut',
+            scrollTrigger: {
+              trigger: row,
+              start: 'top 80%',
+            }
+          }
+        );
+
+        gsap.to(image, {
+          yPercent: 25,
+          ease: 'none',
           scrollTrigger: {
             trigger: row,
-            start: 'top 80%',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
           }
-        }
-      );
+        });
 
-      gsap.to(image, {
-        yPercent: 25,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: row,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1, 
-        }
-      });
-
-      gsap.to(textBlock, {
-        yPercent: -40,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: row,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        }
-      });
-
-      gsap.fromTo(line,
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: 1,
-          ease: 'power3.out',
+        gsap.to(textBlock, {
+          yPercent: -40,
+          ease: 'none',
           scrollTrigger: {
             trigger: row,
-            start: 'top 70%',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
           }
-        }
-      );
+        });
+
+        gsap.fromTo(line,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: row,
+              start: 'top 70%',
+            }
+          }
+        );
+      });
     });
+    return () => media.revert();
   }, { scope: container });
 
   return (
-    <section ref={container} className="relative w-full bg-zinc-950 py-32 flex flex-col gap-32 md:gap-60 overflow-hidden text-[#e5dcd3]">
-      
+    <section ref={container} id="selected-works" className="products-section relative w-full bg-zinc-950 py-20 lg:py-32 flex flex-col gap-16 lg:gap-60 overflow-hidden text-[#e5dcd3]">
+
       <div className="max-w-7xl mx-auto px-4 md:px-20 w-full flex justify-between items-center border-b border-zinc-800 pb-8">
         <span className="font-serif text-xs uppercase tracking-[0.4em] text-zinc-500">Selected Works</span>
         <span className="font-serif text-xs uppercase tracking-[0.4em] text-zinc-500">2026</span>
@@ -112,36 +112,35 @@ export default function PremiumProducts() {
 
       {products.map((product, index) => (
         <div key={product.id} className={`product-row relative w-full flex flex-col ${product.alignment} px-4 md:px-20 max-w-7xl mx-auto`}>
-          
+
           <div className={`text-parallax relative z-20 mix-blend-difference pointer-events-none w-full flex flex-col ${index % 2 !== 0 ? 'md:items-end' : 'md:items-start'}`}>
             <div className="flex items-center gap-4 md:gap-8 mb-2">
               <span className="font-serif text-xl md:text-3xl text-zinc-500 italic">{product.id}</span>
-              <h2 className="font-fa font-bold text-5xl md:text-[8rem] leading-none text-[#e5dcd3] uppercase tracking-tighter">
+              <h2 className="font-fa font-bold text-[clamp(1.75rem,5vw,8rem)] leading-[1.4] lg:leading-none text-[#e5dcd3] uppercase tracking-tighter">
                 {product.titleFa}
               </h2>
             </div>
-            <h3 className="font-serif text-3xl md:text-6xl text-zinc-400 italic ml-12 md:ml-24">
+            <h3 className="font-serif text-2xl lg:text-6xl text-zinc-400 italic ml-12 md:ml-24">
               {product.titleEn}
             </h3>
           </div>
 
-          <div 
-            className="img-container relative w-[90vw] md:w-[50vw] h-[50vh] md:h-[80vh] mt-[-10vh] md:mt-[-20vh] z-10 overflow-hidden group cursor-pointer"
-            onClick={handleOrderClick}
+          <a href="#contact-section" aria-label={`سفارش ${product.titleFa}`}
+            className="img-container relative w-full lg:w-[50vw] aspect-[4/5] lg:aspect-auto lg:h-[80vh] mt-6 lg:mt-[-12vh] z-10 overflow-hidden group cursor-pointer"
           >
-            <img 
-              src={product.image} 
-              alt={product.titleEn} 
-              className="parallax-img absolute top-[-20%] left-0 w-full h-[140%] object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ease-out"
+            <ResponsiveImage sizes="(min-width: 1024px) 50vw, 92vw"
+              src={product.image}
+              alt={product.titleEn}
+              className="parallax-img relative lg:absolute lg:top-[-20%] left-0 w-full h-full lg:h-[140%] object-cover lg:grayscale group-hover:grayscale-0 transition-all duration-1000 ease-out"
             />
             <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors duration-1000 pointer-events-none"></div>
-            
-            <div className="absolute bottom-8 right-8 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+
+            <div className="absolute bottom-8 right-8 z-30 lg:opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-700 pointer-events-none">
               <div className="w-16 h-16 rounded-full bg-[#e5dcd3] text-zinc-950 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <ArrowUpLeft className="w-6 h-6" />
               </div>
             </div>
-          </div>
+          </a>
 
           <div className="relative z-20 w-full max-w-sm mt-8 flex flex-col gap-4" dir="rtl">
             <div className="reveal-line w-full h-[1px] bg-zinc-700 origin-right"></div>

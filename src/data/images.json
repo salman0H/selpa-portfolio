@@ -1,0 +1,236 @@
+{
+  "/images/folio-raw.jpg": {
+    "width": 1024,
+    "height": 572,
+    "variants": [
+      {
+        "src": "/images/optimized/folio-raw-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/folio-raw-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/optimized/folio-raw-1280.webp",
+        "width": 1024
+      }
+    ]
+  },
+  "/images/image_20812b.jpg": {
+    "width": 765,
+    "height": 1024,
+    "variants": [
+      {
+        "src": "/images/optimized/image_20812b-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/image_20812b-800.webp",
+        "width": 765
+      },
+      {
+        "src": "/images/optimized/image_20812b-1280.webp",
+        "width": 765
+      }
+    ]
+  },
+  "/images/image_208147.jpg": {
+    "width": 765,
+    "height": 1024,
+    "variants": [
+      {
+        "src": "/images/optimized/image_208147-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/image_208147-800.webp",
+        "width": 765
+      },
+      {
+        "src": "/images/optimized/image_208147-1280.webp",
+        "width": 765
+      }
+    ]
+  },
+  "/images/image_208183.jpg": {
+    "width": 765,
+    "height": 1024,
+    "variants": [
+      {
+        "src": "/images/optimized/image_208183-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/image_208183-800.webp",
+        "width": 765
+      },
+      {
+        "src": "/images/optimized/image_208183-1280.webp",
+        "width": 765
+      }
+    ]
+  },
+  "/images/image_20842c.jpg": {
+    "width": 765,
+    "height": 1024,
+    "variants": [
+      {
+        "src": "/images/optimized/image_20842c-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/image_20842c-800.webp",
+        "width": 765
+      },
+      {
+        "src": "/images/optimized/image_20842c-1280.webp",
+        "width": 765
+      }
+    ]
+  },
+  "/images/image_2084aa.jpg": {
+    "width": 765,
+    "height": 1024,
+    "variants": [
+      {
+        "src": "/images/optimized/image_2084aa-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/image_2084aa-800.webp",
+        "width": 765
+      },
+      {
+        "src": "/images/optimized/image_2084aa-1280.webp",
+        "width": 765
+      }
+    ]
+  },
+  "/images/image_2084cb.jpg": {
+    "width": 765,
+    "height": 1024,
+    "variants": [
+      {
+        "src": "/images/optimized/image_2084cb-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/image_2084cb-800.webp",
+        "width": 765
+      },
+      {
+        "src": "/images/optimized/image_2084cb-1280.webp",
+        "width": 765
+      }
+    ]
+  },
+  "/images/image_208505.jpg": {
+    "width": 765,
+    "height": 1024,
+    "variants": [
+      {
+        "src": "/images/optimized/image_208505-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/image_208505-800.webp",
+        "width": 765
+      },
+      {
+        "src": "/images/optimized/image_208505-1280.webp",
+        "width": 765
+      }
+    ]
+  },
+  "/images/journal-raw.jpg": {
+    "width": 1024,
+    "height": 572,
+    "variants": [
+      {
+        "src": "/images/optimized/journal-raw-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/journal-raw-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/optimized/journal-raw-1280.webp",
+        "width": 1024
+      }
+    ]
+  },
+  "/images/slider-final.jpg": {
+    "width": 1024,
+    "height": 572,
+    "variants": [
+      {
+        "src": "/images/optimized/slider-final-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/slider-final-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/optimized/slider-final-1280.webp",
+        "width": 1024
+      }
+    ]
+  },
+  "/images/slider-hide.jpg": {
+    "width": 1024,
+    "height": 572,
+    "variants": [
+      {
+        "src": "/images/optimized/slider-hide-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/slider-hide-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/optimized/slider-hide-1280.webp",
+        "width": 1024
+      }
+    ]
+  },
+  "/images/slider-pattern.jpg": {
+    "width": 1024,
+    "height": 572,
+    "variants": [
+      {
+        "src": "/images/optimized/slider-pattern-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/slider-pattern-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/optimized/slider-pattern-1280.webp",
+        "width": 1024
+      }
+    ]
+  },
+  "/images/slider-stitch.jpg": {
+    "width": 1024,
+    "height": 572,
+    "variants": [
+      {
+        "src": "/images/optimized/slider-stitch-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/optimized/slider-stitch-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/optimized/slider-stitch-1280.webp",
+        "width": 1024
+      }
+    ]
+  }
+}

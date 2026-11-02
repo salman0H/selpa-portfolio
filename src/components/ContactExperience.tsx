@@ -7,6 +7,7 @@ export default function ContactExperience() {
   const magneticText = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    if (!window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) return;
     const btn = magneticBtn.current;
     const text = magneticText.current;
     
@@ -38,9 +39,9 @@ export default function ContactExperience() {
   return (
     // z-50 places this layer above all scattered archive images
     <section id="contact-section" ref={container} className="relative z-50 w-full min-h-screen bg-[#e5dcd3] text-zinc-900 py-32 px-4 md:px-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-20">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start justify-between gap-20">
         
-        <div className="flex flex-col w-full md:w-1/2" dir="rtl">
+        <div className="flex flex-col w-full lg:w-1/2" dir="rtl">
           <h2 className="font-display text-6xl md:text-8xl text-zinc-950 mb-8 leading-none tracking-tight">
             شخصی‌سازی <br/> شده
           </h2>
@@ -50,7 +51,7 @@ export default function ContactExperience() {
 
           <div className="flex flex-col w-full border-t border-zinc-300">
             {['چرم فول‌گرین', 'دوخت سنتی', 'پرداخت ارگانیک'].map((item, i) => (
-              <div key={i} className="group flex justify-between items-center py-6 border-b border-zinc-300 cursor-pointer">
+              <div key={i} className="group flex justify-between items-center py-6 border-b border-zinc-300 ">
                 <span className="font-fa text-2xl md:text-4xl text-zinc-800 font-light group-hover:translate-x-[-10px] transition-transform duration-300">{item}</span>
                 <svg className="w-6 h-6 text-zinc-400 group-hover:text-zinc-900 transition-colors transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 17L17 7M17 7H7M17 7V17" />
@@ -60,9 +61,9 @@ export default function ContactExperience() {
           </div>
         </div>
 
-        <div className="flex flex-col w-full md:w-1/2 items-end justify-center gap-8 mt-10 md:mt-0" dir="rtl">
+        <div className="flex flex-col w-full lg:w-1/2 items-end justify-center gap-8 mt-10 md:mt-0" dir="rtl">
           
-          <div className="w-full md:w-[28rem] border border-zinc-300 rounded-[2rem] p-10 flex flex-col items-center text-center">
+          <div className="w-full lg:max-w-[28rem] border border-zinc-300 rounded-[2rem] p-10 flex flex-col items-center text-center">
             <span className="font-serif text-xs uppercase tracking-[0.3em] text-zinc-500 mb-6">Physical Atelier</span>
             <h3 className="font-fa text-3xl font-bold text-zinc-900 mb-4">مشهد، کافه ایوار</h3>
             <p className="font-fa text-zinc-600 font-light">نقطه تماس فیزیکی و نمایش آثار</p>
@@ -73,7 +74,7 @@ export default function ContactExperience() {
             target="_blank"
             rel="noreferrer"
             ref={magneticBtn} 
-            className="group relative w-full md:w-[28rem] h-32 border border-zinc-950 rounded-[3rem] flex items-center justify-center overflow-hidden bg-transparent hover:bg-zinc-950 transition-colors duration-500"
+            className="group relative w-full lg:max-w-[28rem] h-32 border border-zinc-950 rounded-[3rem] flex items-center justify-center overflow-hidden bg-transparent hover:bg-zinc-950 transition-colors duration-500"
           >
             <span ref={magneticText} className="relative z-10 font-sans text-2xl md:text-3xl font-light tracking-widest text-zinc-950 group-hover:text-[#e5dcd3] transition-colors duration-500 pointer-events-none" dir="ltr">
               @salmonFishMan

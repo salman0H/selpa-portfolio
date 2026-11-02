@@ -42,3 +42,14 @@ npm install
 
 # Start the development server
 npm run dev
+### Responsive images
+
+The homepage uses generated WebP variants at 480, 800 and 1280 pixels. Originals
+remain in `public/images`. After replacing a homepage photograph, run
+`npm run images:optimize` and commit both `public/images/optimized` and
+`src/data/images.json`. `ResponsiveImage` supplies intrinsic dimensions,
+viewport-specific source selection and lazy loading; the hero loads eagerly.
+
+The archive uses a regular responsive grid. Touch layouts use a vertical craft
+gallery and static product images; scroll pinning and parallax are reserved for
+large screens with no reduced-motion preference.

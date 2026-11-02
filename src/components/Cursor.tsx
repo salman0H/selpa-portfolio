@@ -8,7 +8,8 @@ export default function Cursor() {
     const cursor = cursorRef.current;
     
     // Skip the custom cursor on mobile and touch devices
-    if (!cursor || !window.matchMedia("(pointer: fine)").matches) return;
+    if (!cursor || !window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) return;
+    document.documentElement.classList.add("custom-cursor-ready");
 
     // Smooth cursor movement
     const onMouseMove = (e: MouseEvent) => {
@@ -47,6 +48,7 @@ export default function Cursor() {
     window.addEventListener('mouseover', handleMouseOver);
 
     return () => {
+      document.documentElement.classList.remove('custom-cursor-ready');
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
     };
@@ -56,7 +58,7 @@ export default function Cursor() {
     <div
       ref={cursorRef}
       // Keep the cursor above all page content
-      className="fixed top-0 left-0 w-4 h-4 bg-[#e5dcd3] rounded-full pointer-events-none z-[9999999] mix-blend-difference transform -translate-x-1/2 -translate-y-1/2 hidden md:block"
+      className="fixed top-0 left-0 w-4 h-4 bg-[#e5dcd3] rounded-full pointer-events-none z-[9999999] mix-blend-difference transform -translate-x-1/2 -translate-y-1/2 custom-cursor hidden"
     ></div>
   );
 }
